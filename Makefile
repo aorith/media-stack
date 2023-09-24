@@ -15,6 +15,10 @@ import:
 start:
 	sudo machinectl start $(NAME)
 
+.PHONY: poweroff
+poweroff:
+	sudo machinectl poweroff $(NAME)
+
 .PHONY: enable
 enable:
 	sudo machinectl enable $(NAME)
