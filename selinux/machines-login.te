@@ -1,0 +1,26 @@
+module machines-login 1.0;
+
+require {
+	type systemd_machined_t;
+	type unconfined_service_t;
+	type system_dbusd_t;
+	type devpts_t;
+	type tmpfs_t;
+	class cap_userns { setgid setuid sys_admin };
+	class lnk_file read;
+	class sock_file write;
+	class chr_file { open read write };
+	class unix_stream_socket connectto;
+}
+
+#============= system_dbusd_t ==============
+allow system_dbusd_t devpts_t:chr_file { read write };
+
+#============= systemd_machined_t ==============
+
+#!!!! This avc can be allowed using the boolean 'daemons_use_tty'
+allow systemd_machined_t devpts_t:chr_file open;
+allow systemd_machined_t self:cap_userns { setgid setuid sys_admin };
+allow systemd_machined_t tmpfs_t:lnk_file read;
+allow systemd_machined_t tmpfs_t:sock_file write;
+allow systemd_machined_t unconfined_service_t:unix_stream_socket connectto;

@@ -1,0 +1,13 @@
+[Exec]
+PrivateUsers=no
+
+[Network]
+VirtualEthernet=no
+
+[Files]
+Bind=/var/home/aorith/storage/tank/data/nixos-containers:/mnt/storage/tank/data/nixos-containers
+Bind=/var/home/aorith/storage/tank/data/nixos-containers/mediaconfs/jellyfin:/var/lib/jellyfin
+Bind=/var/home/aorith/storage/tank/data/nixos-containers/mediaconfs/bazarr:/var/lib/bazarr
+Bind=/var/home/aorith/storage/tank/data/nixos-containers/mediaconfs/transmission:/var/lib/transmission/.config/transmission-daemon
+Bind=/var/home/aorith/storage/tank/data/nixos-containers/mediaconfs:/mediaconfs
+Bind=/var/home/aorith/storage/disk1/media:/MEDIA

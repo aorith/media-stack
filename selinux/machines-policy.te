@@ -1,0 +1,30 @@
+module machines-policy 1.0;
+
+require {
+	type init_var_run_t;
+	type unconfined_service_t;
+    type unlabeled_t;
+	type tmp_t;
+	type systemd_machined_t;
+	type root_t;
+	type container_file_t;
+	class dir { search read write };
+	class file { create getattr ioctl open read write };
+	class lnk_file read;
+	class cap_userns { kill sys_ptrace };
+}
+
+#============= systemd_machined_t ==============
+allow systemd_machined_t container_file_t:dir write;
+allow systemd_machined_t init_var_run_t:file create;
+
+#!!!! This avc can be allowed using the boolean 'daemons_dump_core'
+allow systemd_machined_t root_t:dir write;
+allow systemd_machined_t self:cap_userns { kill sys_ptrace };
+allow systemd_machined_t tmp_t:file { create open write };
+allow systemd_machined_t unconfined_service_t:dir search;
+allow systemd_machined_t unconfined_service_t:file { getattr ioctl open read };
+allow systemd_machined_t unconfined_service_t:lnk_file read;
+
+allow systemd_machined_t unlabeled_t:dir { search read write };
+allow systemd_machined_t init_var_run_t:file { create getattr ioctl open read write };

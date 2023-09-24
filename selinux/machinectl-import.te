@@ -1,0 +1,26 @@
+
+module machinectl-import 1.0;
+
+require {
+    type user_home_t;
+	type default_t;
+    type unlabeled_t;
+	type systemd_importd_t;
+	type init_exec_t;
+	class file { create execute execute_no_trans getattr link map open read setattr unlink write };
+    class dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write };
+    class lnk_file { create getattr link read setattr };
+    class capability dac_override;
+}
+
+#============= systemd_importd_t ==============
+allow systemd_importd_t default_t:file { getattr read };
+allow systemd_importd_t user_home_t:file { getattr read };
+allow systemd_importd_t self:capability dac_override;
+
+allow systemd_importd_t init_exec_t:file { create execute execute_no_trans map open read write };
+
+allow systemd_importd_t unlabeled_t:dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write };
+allow systemd_importd_t unlabeled_t:file { create execute execute_no_trans getattr link link map open read setattr unlink write };
+allow systemd_importd_t unlabeled_t:lnk_file { getattr link read setattr create };
+
