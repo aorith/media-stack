@@ -4,23 +4,38 @@ module machinectl-import 1.0;
 require {
     type user_home_t;
 	type default_t;
+    type system_dbusd_t;
     type unlabeled_t;
 	type systemd_importd_t;
+    type systemd_machined_t;
 	type init_exec_t;
+    type etc_t;
+    type init_var_run_t;
 	class file { create execute execute_no_trans getattr link map open read setattr unlink write };
-    class dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write };
+    class dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write relabelfrom relabelto };
     class lnk_file { create getattr link read setattr };
     class capability dac_override;
 }
 
 #============= systemd_importd_t ==============
-allow systemd_importd_t default_t:file { getattr read };
 allow systemd_importd_t user_home_t:file { getattr read };
 allow systemd_importd_t self:capability dac_override;
 
 allow systemd_importd_t init_exec_t:file { create execute execute_no_trans map open read write };
 
-allow systemd_importd_t unlabeled_t:dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write };
+allow systemd_importd_t default_t:dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write relabelfrom relabelto };
+allow systemd_importd_t default_t:file { create execute execute_no_trans getattr link link map open read setattr unlink write };
+allow systemd_importd_t default_t:lnk_file { getattr link read setattr create };
+
+allow systemd_importd_t unlabeled_t:dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write relabelfrom relabelto };
 allow systemd_importd_t unlabeled_t:file { create execute execute_no_trans getattr link link map open read setattr unlink write };
 allow systemd_importd_t unlabeled_t:lnk_file { getattr link read setattr create };
 
+allow system_dbusd_t default_t:dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write relabelfrom relabelto };
+allow system_dbusd_t default_t:file { create execute execute_no_trans getattr link link map open read setattr unlink write };
+
+allow systemd_machined_t etc_t:dir { add_name create getattr link ioctl open read remove_name rename search setattr unlink write relabelfrom relabelto };
+allow systemd_machined_t etc_t:file { create execute execute_no_trans getattr link link map open read setattr unlink write };
+
+allow systemd_machined_t init_var_run_t:file { create execute execute_no_trans getattr link link map open read setattr unlink write };
+allow systemd_importd_t unlabeled_t:lnk_file { getattr link read setattr create };

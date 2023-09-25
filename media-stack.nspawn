@@ -5,6 +5,8 @@ PrivateUsers=no
 VirtualEthernet=no
 
 [Files]
+BindReadOnly=/nix/store:/nix/store
+
 Bind=/var/home/aorith/storage/tank/data/nixos-containers:/mnt/storage/tank/data/nixos-containers
 Bind=/var/home/aorith/storage/tank/data/nixos-containers/mediaconfs/jellyfin:/var/lib/jellyfin
 Bind=/var/home/aorith/storage/tank/data/nixos-containers/mediaconfs/bazarr:/var/lib/bazarr

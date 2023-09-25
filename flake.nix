@@ -14,10 +14,10 @@
       default = let
         nixos = inputs.nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [./configuration.nix ./nspawn-tarball.nix];
+          modules = [./configuration.nix ./nspawn-rootSystem.nix];
         };
       in
-        nixos.config.system.build.tarball;
+        nixos.config.system.build.rootSystem;
     });
   };
 }

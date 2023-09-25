@@ -9,7 +9,10 @@ build:
 
 .PHONY: import
 import:
-	sudo machinectl import-tar ."/result/tarball/nixos-system-$(ARCH)-linux.tar.xz" $(NAME)
+	sudo machinectl poweroff $(NAME) 2>/dev/null && sleep 5 || true
+	sudo machinectl remove $(NAME) 2>/dev/null || true
+	sudo machinectl import-fs result/root $(NAME)
+	sudo ./bootstrap.sh
 
 .PHONY: start
 start:
