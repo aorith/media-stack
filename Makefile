@@ -12,7 +12,8 @@ import:
 	sudo machinectl poweroff $(NAME) 2>/dev/null && sleep 5 || true
 	sudo machinectl remove $(NAME) 2>/dev/null || true
 	sudo machinectl import-fs result/root $(NAME)
-	sudo ./bootstrap.sh
+	sudo mkdir -p /etc/systemd/nspawn
+	sudo cp ./media-stack.nspawn /etc/systemd/nspawn/
 
 .PHONY: start
 start:

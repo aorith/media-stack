@@ -23,6 +23,6 @@ $ sudo du -sh /var/lib/machines/media-stack
 To create a new container:
 
 - Clone this repository
-- Modify [configuration.nix](./configuration.nix)
-- Modify [Makefile](./Makefile) (change container name)
-- Create a `*.nspawn` file with the container name (see [media-stack.nspawn](./media-stack.nspawn)
+- Edit [configuration.nix](./configuration.nix)
+- Edit [Makefile](./Makefile) (change container name)
+- Create a `*.nspawn` file with the container name (see [media-stack.nspawn](./media-stack.nspawn))
