@@ -25,6 +25,7 @@ in {
     echo "Hi there!
   '';
 
+  # Modified from: https://github.com/NixOS/nixpkgs/blob/5d20a2b99a586c6611b30b12a684df96f8f95c1c/nixos/lib/make-system-tarball.nix#L37
   system.build.rootSystem = pkgs.stdenv.mkDerivation {
     name = "nixos-root";
     builder = ./make-system-root.sh;
