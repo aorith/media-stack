@@ -17,6 +17,7 @@ in {
     # (modulesPath + "/profiles/minimal.nix") # <-- do not! see: https://github.com/guyonvarch/playos/commit/a9669ca0470f1653ea6b7173eb250db2f39dd3f3
     # and https://github.com/NixOS/nixpkgs/issues/102137
     ./nspawn-image.nix
+    ./qbittorrent.nix
   ];
 
   boot.isContainer = true;
@@ -88,7 +89,19 @@ in {
     };
   };
 
+  # https://github.com/NixOS/nixpkgs/issues/258793
+  #/nix/store/9ynx7q44xs7vr2z723kxs4pp3dr1v968-transmission-3.00/bin/transmission-daemon -f -g /var/lib/transmission/.config/transmission-daemon
+  systemd.services.transmission.serviceConfig = {
+    RootDirectoryStartOnly = lib.mkForce false;
+    RootDirectory = lib.mkForce "";
+  };
   services = {
+    qbittorrent = {
+      enable = true;
+      user = user.name;
+      group = group.name;
+    };
+
     transmission = {
       enable = true;
       user = "${user.name}";
