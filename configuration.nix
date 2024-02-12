@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  modulesPath,
   ...
 }: let
   user = {
@@ -89,12 +88,6 @@ in {
     };
   };
 
-  # https://github.com/NixOS/nixpkgs/issues/258793
-  #/nix/store/9ynx7q44xs7vr2z723kxs4pp3dr1v968-transmission-3.00/bin/transmission-daemon -f -g /var/lib/transmission/.config/transmission-daemon
-  systemd.services.transmission.serviceConfig = {
-    RootDirectoryStartOnly = lib.mkForce false;
-    RootDirectory = lib.mkForce "";
-  };
   services = {
     qbittorrent = {
       enable = true;
@@ -102,30 +95,6 @@ in {
       group = group.name;
     };
 
-    transmission = {
-      enable = true;
-      user = "${user.name}";
-      group = "${group.name}";
-      performanceNetParameters = true;
-      settings = {
-        alt-speed-up = 10;
-        alt-speed-down = 150;
-        blocklist-enabled = true;
-        blocklist-url = "https://github.com/sahsu/transmission-blocklist/releases/latest/download/blocklist.gz";
-        rpc-bind-address = "0.0.0.0";
-        rpc-whitelist-enabled = false;
-        peer-port = 51413;
-        incomplete-dir = "/MEDIA/.downloading";
-        download-dir = "/MEDIA/downloads";
-        download-queue-enabled = true;
-        download-queue-size = 3;
-        idle-seeding-limit = 15;
-        idle-seeding-enabled = true;
-        ratio-limit-enabled = true;
-        ratio-limit = 0.1;
-        umask = 2;
-      };
-    };
     radarr = {
       enable = true;
       user = "${user.name}";
