@@ -39,8 +39,8 @@ in {
   # required for systemd-nspawn https://github.com/NixOS/nixpkgs/issues/28833
   environment.etc."os-release".mode = "0444";
 
-  # Generate with `openssl passwd -6 <password>`
-  users.users.root.initialHashedPassword = "$6$nZjdJqbWrot/3qp1$gxUvzKo0o.6bjLmZqdifRXLDuilPFkzfl7rG7MNKH0HYY6R.d.lKIzo9V18vIOw6bPx46vUEbkWIWbgCPF2L11";
+  # actually, the password will be the same as the host
+  users.users.root.initialPassword = "password";
 
   users.groups."${group.name}" = {
     members = ["${user.name}"];
