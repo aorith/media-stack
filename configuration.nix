@@ -33,8 +33,7 @@ in {
   networking.firewall.enable = false;
   environment.etc."resolv.conf".text = "nameserver 8.8.8.8\nnameserver 8.8.4.4";
 
-  # Generate with `openssl passwd -6 <password>`
-  users.users.root.initialHashedPassword = "$6$nZjdJqbWrot/3qp1$gxUvzKo0o.6bjLmZqdifRXLDuilPFkzfl7rG7MNKH0HYY6R.d.lKIzo9V18vIOw6bPx46vUEbkWIWbgCPF2L11";
+  users.users.root.password = "password";
 
   users.groups."${group.name}" = {
     members = ["${user.name}"];
@@ -47,7 +46,7 @@ in {
     description = "${user.name}";
     extraGroups = ["systemd-journal" "render" "video"];
     shell = pkgs.bash;
-    initialHashedPassword = "$6$nZjdJqbWrot/3qp1$gxUvzKo0o.6bjLmZqdifRXLDuilPFkzfl7rG7MNKH0HYY6R.d.lKIzo9V18vIOw6bPx46vUEbkWIWbgCPF2L11";
+    password = "password";
   };
 
   systemd.services.prowlarr = {
