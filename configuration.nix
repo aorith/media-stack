@@ -1,8 +1,5 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{ pkgs, lib, ... }:
+let
   user = {
     name = "media-stack";
     uid = 1013;
@@ -11,7 +8,8 @@
     name = "media-stack";
     gid = 1013;
   };
-in {
+in
+{
   imports = [
     # (modulesPath + "/profiles/minimal.nix") # <-- do not! see: https://github.com/guyonvarch/playos/commit/a9669ca0470f1653ea6b7173eb250db2f39dd3f3
     # and https://github.com/NixOS/nixpkgs/issues/102137
@@ -43,7 +41,7 @@ in {
   users.users.root.initialPassword = "password";
 
   users.groups."${group.name}" = {
-    members = ["${user.name}"];
+    members = [ "${user.name}" ];
     gid = group.gid;
   };
   users.users."${user.name}" = {
@@ -51,15 +49,19 @@ in {
     uid = user.uid;
     group = "${group.name}";
     description = "${user.name}";
-    extraGroups = ["systemd-journal" "render" "video"];
+    extraGroups = [
+      "systemd-journal"
+      "render"
+      "video"
+    ];
     shell = pkgs.bash;
     initialHashedPassword = "$6$nZjdJqbWrot/3qp1$gxUvzKo0o.6bjLmZqdifRXLDuilPFkzfl7rG7MNKH0HYY6R.d.lKIzo9V18vIOw6bPx46vUEbkWIWbgCPF2L11";
   };
 
   systemd.services.prowlarr = {
     description = "Prowlarr";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
       Type = "simple";
@@ -72,8 +74,8 @@ in {
 
   systemd.services.jellyfin = {
     description = "Jellyfin";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
 
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/misc/jellyfin.nix
     serviceConfig = {
@@ -83,7 +85,10 @@ in {
       WorkingDirectory = "/var/lib/jellyfin";
       ExecStart = "${pkgs.jellyfin}/bin/jellyfin --datadir '/var/lib/jellyfin' --cachedir '/tmp/jellyfin-cache'";
       Restart = "on-failure";
-      SuccessExitStatus = ["0" "143"];
+      SuccessExitStatus = [
+        "0"
+        "143"
+      ];
       TimeoutSec = 15;
     };
   };
@@ -111,6 +116,11 @@ in {
       enable = true;
       user = "${user.name}";
       group = "${group.name}";
+    };
+    amule = {
+      enable = true;
+      user = "${user.name}";
+      dataDir = "/mediaconfs/amule";
     };
   };
 

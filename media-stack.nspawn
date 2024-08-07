@@ -10,9 +10,11 @@ BindReadOnly=/nix/store:/nix/store
 Bind=/mnt/storage/tank/data/nixos-containers:/mnt/storage/tank/data/nixos-containers
 Bind=/mnt/storage/tank/data/nixos-containers/mediaconfs/jellyfin:/var/lib/jellyfin
 Bind=/mnt/storage/tank/data/nixos-containers/mediaconfs/bazarr:/var/lib/bazarr
-Bind=/mnt/storage/tank/data/nixos-containers/mediaconfs/transmission:/var/lib/transmission/.config/transmission-daemon
+#Bind=/mnt/storage/tank/data/nixos-containers/mediaconfs/transmission:/var/lib/transmission/.config/transmission-daemon
 Bind=/mnt/storage/tank/data/nixos-containers/mediaconfs/qbittorrent:/var/lib/qbittorrent
 Bind=/mnt/storage/tank/data/nixos-containers/mediaconfs:/mediaconfs
 Bind=/mnt/storage/disk1/media:/MEDIA
 Bind=/mnt/storage/disk1/media:/mnt/storage/disk1/media
 Bind=/dev/dri:/dev/dri
+
+# vim: ft=conf

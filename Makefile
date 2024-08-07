@@ -34,3 +34,11 @@ disable:
 .PHONY: remove
 remove:
 	sudo machinectl remove $(NAME)
+
+.PHONY: status
+status:
+	sudo machinectl status $(NAME)
+
+.PHONY: login
+login:
+	sudo machinectl login $(NAME)
